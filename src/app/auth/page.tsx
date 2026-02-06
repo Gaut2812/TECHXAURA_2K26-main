@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
@@ -8,7 +8,7 @@ import { RegisterForm } from "@/components/auth/RegisterForm";
 import { LoginForm } from "@/components/auth/LoginForm";
 import toast from "react-hot-toast";
 
-export default function AuthPage() {
+function AuthPageContent() {
     const [isLogin, setIsLogin] = React.useState(false);
     const searchParams = useSearchParams();
 
@@ -143,5 +143,17 @@ export default function AuthPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function AuthPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-black flex items-center justify-center">
+                <div className="w-12 h-12 border-2 border-cyan-500 border-t-purple-500 rounded-full animate-spin" />
+            </div>
+        }>
+            <AuthPageContent />
+        </Suspense>
     );
 }
